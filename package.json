@@ -1,0 +1,23 @@
+{
+  "name": "query-data",
+  "version": "1.0.0",
+  "description": "Parse and serialize JSON data in a query parameter",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timhudson/query-data.git"
+  },
+  "author": "Tim Hudson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/timhudson/query-data/issues"
+  },
+  "homepage": "https://github.com/timhudson/query-data",
+  "devDependencies": {
+    "request": "^2.42.0",
+    "tape": "^2.14.0"
+  }
+}
