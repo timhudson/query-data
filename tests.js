@@ -11,10 +11,13 @@ test('parse', function(t) {
 })
 
 test('serialize', function(t) {
-  t.plan(1)
+  t.plan(2)
 
   var data = {blam: 'pow'}
-  var query = queryData.serialize(data)
 
+  var query = queryData.serialize(data)
   t.equal(query, 'eyJibGFtIjoicG93In0%3D')
+
+  var query = queryData.serialize(data, {encodeURIComponent: false})
+  t.equal(query, 'eyJibGFtIjoicG93In0=')
 })

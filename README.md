@@ -34,9 +34,19 @@ This module will parse and serialize between an object and a URI encoded, base64
 Return an object parsed from the request's querystring. `param` can be used to specify
 which parameter to parse. The value for this parameter should be a URI encoded, base64 encoding of a JSON string.
 
-### queryData.serialize(obj)
+### queryData.serialize(obj, options)
 
 Return a URI encoded, base64 encoded, JSON string of the provided object.
+Pass `{encodeURIComponent: false}` if you do not want the string encoded.
+This option is useful when passing the serialized output to modules
+that handle the encoded for you, i.e. [superagent](http://visionmedia.github.io/superagent/#query-strings).
+
+``` js
+var data = {blam: 'pow'}
+
+queryData.serialize(data) // eyJibGFtIjoicG93In0%3D
+queryData.serialize(data, {encodeURIComponent: false}) // eyJibGFtIjoicG93In0=
+```
 
 ## License
 

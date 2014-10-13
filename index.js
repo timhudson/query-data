@@ -14,7 +14,11 @@ module.exports = function(req, key) {
   }
 }
 
-module.exports.serialize = function(obj) {
+module.exports.serialize = function(obj, options) {
+  options = options || {encodeURIComponent: true}
+
   var json = JSON.stringify(obj)
-  return encodeURIComponent(new Buffer(json).toString('base64'))
+  var buffer = new Buffer(json).toString('base64')
+
+  return options.encodeURIComponent ? encodeURIComponent(buffer) : buffer
 }
