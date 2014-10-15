@@ -6,8 +6,12 @@ module.exports = function(req, key) {
   
   var qs = querystring.parse(url.parse(req.url).query)
 
+  return parse(decodeURIComponent(qs[key]))
+}
+
+var parse = module.exports.parse = function(str) {
   try {
-    var json = new Buffer(decodeURIComponent(qs[key]) || '', 'base64').toString('utf8')
+    var json = new Buffer(str, 'base64').toString('utf8')
     return JSON.parse(json)
   } catch(err) {
     return
