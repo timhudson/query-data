@@ -1,15 +1,8 @@
-var http = require('http')
-var request = require('request')
-var queryData = require('./')
+const assert = require('assert')
+const { serialize, parse } = require('./')
 
-var server = http.createServer(function(req, res) {
-  var data = queryData(req)
-  res.end(JSON.stringify(data))
-}).listen(1515)
+const query = serialize({ blam: 'pow' })
+assert.equal(query, 'eyJibGFtIjoicG93In0=')
 
-var query = queryData.serialize({blam: 'pow'})
-
-request('http://localhost:1515?data=' + query, function(err, res, body) {
-  console.log(body, query)
-  server.close()
-})
+const data = parse(query)
+assert.deepEqual(data, { blam: 'pow' })

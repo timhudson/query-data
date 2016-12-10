@@ -4,7 +4,7 @@
   "description": "Parse and serialize JSON data in a query parameter",
   "main": "index.js",
   "scripts": {
-    "test": "tape tests.js"
+    "test": "standard && ava"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/timhudson/query-data",
   "devDependencies": {
-    "request": "^2.42.0",
-    "tape": "^2.14.0"
+    "ava": "^0.17.0",
+    "standard": "^8.6.0"
   }
 }

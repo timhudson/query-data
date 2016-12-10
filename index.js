@@ -1,28 +1,21 @@
-var url = require('url')
-var querystring = require('querystring')
+const url = require('url')
 
-module.exports = function(req, key) {
+const serialize = (obj) => {
+  const json = JSON.stringify(obj)
+  return new Buffer(json).toString('base64')
+}
+
+const parse = (str) => {
+  const json = new Buffer(str, 'base64').toString('utf8')
+  return JSON.parse(json)
+}
+
+module.exports = (req, key) => {
   key = key || 'data'
-  
-  var qs = querystring.parse(url.parse(req.url).query)
 
-  return parse(decodeURIComponent(qs[key]))
+  const query = url.parse(req.url, true).query
+  return parse(query[key])
 }
 
-var parse = module.exports.parse = function(str) {
-  try {
-    var json = new Buffer(str, 'base64').toString('utf8')
-    return JSON.parse(json)
-  } catch(err) {
-    return
-  }
-}
-
-module.exports.serialize = function(obj, options) {
-  options = options || {encodeURIComponent: true}
-
-  var json = JSON.stringify(obj)
-  var buffer = new Buffer(json).toString('base64')
-
-  return options.encodeURIComponent ? encodeURIComponent(buffer) : buffer
-}
+module.exports.serialize = serialize
+module.exports.parse = parse

@@ -1,52 +1,59 @@
-# query-data
+# query-data [![build status](http://img.shields.io/travis/timhudson/query-data.svg?style=flat)](http://travis-ci.org/timhudson/query-data)
 
-Parse and serialize JSON data in a query parameter
-
-[![build status](http://img.shields.io/travis/timhudson/query-data.svg?style=flat)](http://travis-ci.org/timhudson/query-data)
+> Parse and serialize JSON data in a query parameter
 
 ## Example
 
-``` js
-var http = require('http')
-var request = require('request')
-var queryData = require('query-data')
+### `serialize` and `parse`
 
-var server = http.createServer(function(req, res) {
-  var data = queryData(req)
+``` js
+const assert = require('assert')
+const { serialize, parse } = require('query-data')
+
+const query = serialize({ blam: 'pow' })
+assert.equal(query, 'eyJibGFtIjoicG93In0=')
+
+const data = parse(query)
+assert.deepEqual(data, { blam: 'pow' })
+```
+
+### Parse from a `req` object
+
+``` js
+const http = require('http')
+const request = require('request')
+const queryData = require('./')
+
+const server = http.createServer((req, res) => {
+  const data = queryData(req)
   res.end(JSON.stringify(data))
 }).listen(1515)
 
-var query = queryData.serialize({blam: 'pow'})
+const query = queryData.serialize({ blam: 'pow' })
 
-request('http://localhost:1515?data=' + query, function(err, res, body) {
-  console.log(body, query) // {"blam":"pow"} eyJibGFtIjoicG93In0%3D
+request('http://localhost:1515?data=' + query, (err, res, body) => {
+  console.log(body, query)
   server.close()
 })
 ```
 
 ## Usage
 
-This module will parse and serialize between an object and a URI encoded, base64 encoding of a JSON string.
-`{blam: 'pow'}` becomes `'eyJibGFtIjoicG93In0%3D'` and vice versa.
+This module will parse and serialize between an object and a base64 encoded JSON string.
+`{ blam: 'pow' }` becomes `'eyJibGFtIjoicG93In0='` and vice versa.
 
 ### queryData(req, param='data')
 
-Return an object parsed from the request's querystring. `param` can be used to specify
-which parameter to parse. The value for this parameter should be a URI encoded, base64 encoding of a JSON string.
+The main export returns an object parsed from the request's querystring. `param` can be used to specify
+which parameter to parse. The value for this parameter should be a URI encoded, base64 encoding of a JSON string. Yeah, thats a mouthful.
 
-### queryData.serialize(obj, options)
+### queryData.serialize(obj)
 
-Return a URI encoded, base64 encoded, JSON string of the provided object.
-Pass `{encodeURIComponent: false}` if you do not want the string encoded.
-This option is useful when passing the serialized output to modules
-that handle the encoded for you, i.e. [superagent](http://visionmedia.github.io/superagent/#query-strings).
+Returns a base64 encoded JSON string of the provided object
 
-``` js
-var data = {blam: 'pow'}
+### queryData.parse(str)
 
-queryData.serialize(data) // eyJibGFtIjoicG93In0%3D
-queryData.serialize(data, {encodeURIComponent: false}) // eyJibGFtIjoicG93In0=
-```
+Returns an object parsed from a base64 encoded JSON string
 
 ## License
 
