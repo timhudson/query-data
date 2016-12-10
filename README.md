@@ -22,7 +22,7 @@ assert.deepEqual(data, { blam: 'pow' })
 ``` js
 const http = require('http')
 const request = require('request')
-const queryData = require('./')
+const queryData = require('query-data')
 
 const server = http.createServer((req, res) => {
   const data = queryData(req)
