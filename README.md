@@ -42,16 +42,16 @@ request('http://localhost:1515?data=' + query, (err, res, body) => {
 This module will parse and serialize between an object and a base64 encoded JSON string.
 `{ blam: 'pow' }` becomes `'eyJibGFtIjoicG93In0='` and vice versa.
 
-### queryData(req, param='data')
+### `queryData(req, param='data')`
 
 The main export returns an object parsed from the request's querystring. `param` can be used to specify
 which parameter to parse. The value for this parameter should be a URI encoded, base64 encoding of a JSON string. Yeah, thats a mouthful.
 
-### queryData.serialize(obj)
+### `queryData.serialize(obj)`
 
 Returns a base64 encoded JSON string of the provided object
 
-### queryData.parse(str)
+### `queryData.parse(str)`
 
 Returns an object parsed from a base64 encoded JSON string
 
